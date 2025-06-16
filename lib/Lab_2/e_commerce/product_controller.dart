@@ -7,6 +7,7 @@ class ProductController{
     Product(
         "Nike Waffle One Sneaker",
         "2000",
+        "1750",
         "sneakers",
         "green",
         "Nike",
@@ -17,6 +18,7 @@ class ProductController{
     Product(
         "Nike Running Shoe",
         "1500",
+        "1300",
         "sneakers",
         "black",
         "Adidas",
@@ -27,6 +29,7 @@ class ProductController{
     Product(
         "Flat Slip On Pumps",
         "2100",
+        "1950",
         "flats",
         "green",
         "Vans",
@@ -36,7 +39,8 @@ class ProductController{
 
     Product(
         "Knit Ballet Flat",
-        "1200",
+        "2100",
+        "1800",
         "flats",
         "black",
         "Adidas",
@@ -47,6 +51,7 @@ class ProductController{
     Product(
         "Nike Air Monarch IV",
         "2350",
+        "2100",
         "sneakers",
         "white",
         "Nike",
@@ -57,6 +62,7 @@ class ProductController{
     Product(
         "Nike Air Vapormax Plus",
         "2110",
+        "1900",
         "sneakers",
         "red",
         "Nike",
@@ -67,6 +73,7 @@ class ProductController{
     Product(
         "Loafer Flats",
         "1750",
+        "1500",
         "flats",
         "white",
         "Vans",
@@ -77,6 +84,7 @@ class ProductController{
     Product(
         "Nike Zoom Freak",
         "1400",
+        "1200",
         "sneakers",
         "green",
         "Nike",
@@ -87,6 +95,7 @@ class ProductController{
     Product(
         "Nike Men's Sneaker",
         "1650",
+        "1500",
         "sneakers",
         "blue",
         "Adidas",
@@ -97,6 +106,7 @@ class ProductController{
     Product(
         "PUMA BLACK-OCE",
         "1900",
+        "1700",
         "sneakers",
         "green",
         "Puma",
@@ -107,6 +117,7 @@ class ProductController{
     Product(
         "Pacer Future Sneaker",
         "1500",
+        "1350",
         "sneakers",
         "red",
         "Puma",
@@ -117,6 +128,7 @@ class ProductController{
     Product(
         "Unisex-Adult Super",
         "1999",
+        "1799",
         "sneakers",
         "black",
         "Puma",
@@ -126,7 +138,8 @@ class ProductController{
 
     Product(
         "Roma Basic Sneaker",
-        "1760",
+        "1750",
+        "1500",
         "sneakers",
         "white",
         "Puma",
@@ -137,6 +150,7 @@ class ProductController{
     Product(
         "Pacer Future Doubleknit",
         "1950",
+        "1800",
         "sneakers",
         "black",
         "Puma",
@@ -147,6 +161,7 @@ class ProductController{
     Product(
         "Fusion Evo Golf Shoe",
         "1400",
+        "1200",
         "sneakers",
         "green",
         "Puma",
@@ -157,6 +172,7 @@ class ProductController{
     Product(
         "Rainbow Chex Skate",
         "1850",
+        "1500",
         "flats",
         "red",
         "Vans",
@@ -167,6 +183,7 @@ class ProductController{
     Product(
         "Low-Top Trainers",
         "2200",
+        "2000",
         "sandals",
         "white",
         "Vans",
@@ -177,6 +194,7 @@ class ProductController{
     Product(
         "Vans Unisex Low-Top",
         "2350",
+        "2100",
         "sandals",
         "blue",
         "Vans",
@@ -187,6 +205,7 @@ class ProductController{
     Product(
         "Classic Bandana Sneakers",
         "3550",
+        "3200",
         "sandals",
         "black",
         "Nike",
@@ -197,6 +216,7 @@ class ProductController{
     Product(
         "Chunky High Heel",
         "3700",
+        "3500",
         "heels",
         "black",
         "Vans",
@@ -207,6 +227,7 @@ class ProductController{
     Product(
         "Slip On Stiletto High Heel",
         "3300",
+        "3150",
         "heels",
         "black",
         "Puma",
@@ -217,6 +238,7 @@ class ProductController{
     Product(
         "DREAM PAIRS Court Shoes",
         "2900",
+        "2600",
         "heels",
         "red",
         "Nike",
@@ -227,6 +249,7 @@ class ProductController{
     Product(
         "Low Mid Block Heels",
         "2350",
+        "2100",
         "heels",
         "black",
         "Nike",
@@ -237,6 +260,7 @@ class ProductController{
     Product(
         "Chunky High Heel",
         "2500",
+        "2250",
         "heels",
         "black",
         "Adidas",
@@ -247,6 +271,7 @@ class ProductController{
     Product(
         "Amore Fashion Stilettos",
         "2800",
+        "2500",
         "heels",
         "white",
         "Adidas",
@@ -257,6 +282,7 @@ class ProductController{
     Product(
         "Bridal Sandals Glitter",
         "2550",
+        "2200",
         "heels",
         "black",
         "Adidas",
@@ -267,6 +293,7 @@ class ProductController{
     Product(
         "Wedding Prom Bridal",
         "3700",
+        "3300",
         "flats",
         "black",
         "Adidas",
@@ -277,8 +304,8 @@ class ProductController{
 
   List<dynamic> cartList = [];
 
-  void addToProductList(String title , String price , String category , String color , String company , String image , bool isFavourite){
-    Product newProduct = Product(title, price, category, color, company, image , isFavourite);
+  void addToProductList(String title , String price , String offerPrice , String category , String color , String company , String image , bool isFavourite){
+    Product newProduct = Product(title, price, offerPrice , category, color, company, image , isFavourite);
     productList.add(newProduct);
   }
 

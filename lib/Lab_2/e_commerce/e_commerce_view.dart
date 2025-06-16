@@ -45,25 +45,36 @@ class _ECommerceViewState extends State<ECommerceView>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 20,),
-            Card(
-              elevation: 5,
-              child: ListTile(
-                title: Text(
-                  "My Myntra",
-                  style: TextStyle(fontSize: 16),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.15,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.blueAccent, Colors.purpleAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight
+                )
+              ),
+              child: Card(
+                // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)
                 ),
-                subtitle: Text(
-                  "shop ",
-                  style: TextStyle(fontSize: 12, color: Colors.blue),
+                elevation: 5,
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.04,
+                      left: MediaQuery.of(context).size.width * 0.04
+                  ),
+                  title: Text(
+                    "My Shop",
+                    style: TextStyle(fontSize: 20 , color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    "Step Into Style",
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
                 ),
-                // trailing: Badge(
-                //   label: Text("${productController.cartList.length}"),
-                //   isLabelVisible: true,
-                //   child: IconButton(onPressed: (){
-                //     print("Cart Button Pressed");
-                //   }, icon: Icon(Icons.shopping_cart)),
-                // ),
               ),
             ),
             SizedBox(
@@ -120,55 +131,92 @@ class _ECommerceViewState extends State<ECommerceView>
               Expanded(
                 child: GridView.builder(
                   gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2 , mainAxisExtent: 400),
+                      SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2 , mainAxisExtent: 380),
                   itemCount: productController.productList.length,
                   itemBuilder: (BuildContext context, index) {
                     return Container(
-                      height: MediaQuery.of(context).size.height * 500,
-                      child: Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              trailing: IconButton(onPressed: (){
+                      // height: MediaQuery.of(context).size.height * 500,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [  Color(0xFFFDFCFB),
+                          Color(0xFFFFE5EC),],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      margin: EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius : BorderRadius.vertical(top: Radius.circular(15)),
+                                child: Image.network(
+                                  "${productController.productList[index].image}" ,
+                                  height: MediaQuery.of(context).size.height * 0.25,
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              
+                              Positioned(
+                                  top: 10,
+                                  right : 10,
+                                  child: IconButton(onPressed: (){
+                                    productController.productList[index].isFavourite = !productController.productList[index].isFavourite;
 
-                                productController.productList[index].isFavourite = !productController.productList[index].isFavourite;
+                                    setState(() {
 
+                                    });
+                                  }, icon: productController.productList[index].isFavourite
+                                      ? Icon(Icons.favorite , color: Colors.red,)
+                                      : Icon(Icons.favorite_border_outlined)),
+                              )
+                            ],
+                          ),
+
+                          ListTile(
+                            title: Text("${productController.productList[index].title}"),
+                            // subtitle: Text("price : ${productController.productList[index].price}" , style: TextStyle(color: Colors.blue),),
+                            trailing:  CircleAvatar(
+                              backgroundColor: Colors.blue[300],
+                              child: IconButton(onPressed: (){
+                                productController.cartList.add(productController.productList[index]);
                                 setState(() {
 
                                 });
-
-                              }, icon: productController.productList[index].isFavourite
-                                  ? Icon(Icons.favorite , color: Colors.red,)
-                                  : Icon(Icons.favorite_border_outlined)),
+                                // print(productController.cartList);
+                              }, icon: Icon(Icons.add))),
                             ),
-                            
-                            Image.network(
-                              "${productController.productList[index].image}" ,
-                              height: MediaQuery.of(context).size.height * 0.2,
-                              width: MediaQuery.of(context).size.height * 0.2,),
-                            
-                            ListTile(
-                              title: Text("${productController.productList[index].title}"),
-                              // subtitle: Text("price : ${productController.productList[index].price}" , style: TextStyle(color: Colors.blue),),
-                              trailing:  CircleAvatar(
-                                backgroundColor: Colors.blue[300],
-                                child: IconButton(onPressed: (){
-                                  productController.cartList.add(productController.productList[index]);
-                                  setState(() {
 
-                                  });
-                                  print(productController.cartList);
-                                }, icon: Icon(Icons.add))),
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "₹${productController.productList[index].offerPrice}",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  "₹${productController.productList[index].price}",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("price : ${productController.productList[index].price}" , style: TextStyle(color: Colors.blue),),
-                            )
-
-                          ],
-                        ),
+                        ],
                       ),
                     );
                   },

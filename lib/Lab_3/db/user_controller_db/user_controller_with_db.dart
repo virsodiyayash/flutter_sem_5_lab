@@ -1,44 +1,57 @@
-import 'package:sqflite/sqflite.dart';
-
 import '../user_model_db/user_model.dart';
 import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart';
 
-class UserControllerwithdb{
 
-  final List<UserModelDB> _userList = [];
+class LocalPersonController{
+  List<Map<String,dynamic>> _persons = [];
+  late Database _database;
 
-  late Database db;
-
-  void initDatabase() async{
-    var db = await openDatabase(
-      path.join(await getDatabasesPath(), "person.db"),
-      onCreate: (db , version){
+  Future<void> initDataBase() async{
+    _database = await openDatabase(
+      path.join(await getDatabasesPath(),'persons.db'),
+      version: 1,
+      onCreate: (db, version) {
         db.execute('''
-        CREATE TABLE student(
-          ID INT AUTOINCREMENT
-        )
-        ''');
-      }
+         CREATE TABLE student(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT   
+         )
+         ''');
+      },
     );
   }
 
-  get getUser => _userList;
+  get persons => _persons;
 
-  void addUser(UserModelDB user){
-    _userList.add(user);
-    print("User is added into the list");
+  Future<List<Map<String,dynamic>>> fetchUsers() async{
+    final List<Map<String, dynamic>> tempUser = await _database.query('student');
+    _persons = tempUser;
+    return tempUser;
   }
 
-  void deleteUser(UserModelDB user){
-    _userList.removeWhere((element) => element.name == user.name);
+  Future<void> addLocalPerson(String name) async{
+    await _database.insert('student', {'name':name});
+    await fetchUsers();
+    print(_persons);
   }
 
-  void editUser(UserModelDB oldUser , UserModelDB newUser){
-    int index = _userList.indexWhere((element) => element.name == oldUser.name);
-    _userList[index] = newUser;
+  Future<void> deleteUser(int id) async{
+    await _database.delete(
+      'student',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    await fetchUsers();
   }
 
-  void displayUser(){
-
+  Future<void> editPerson(int id,String newName) async{
+    await _database.update(
+      'student',
+      {'name' : newName},
+      where: 'id = ?',
+      whereArgs:  [id],
+    );
+    fetchUsers();
   }
 }

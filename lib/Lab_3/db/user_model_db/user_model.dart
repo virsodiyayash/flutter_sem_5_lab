@@ -1,5 +1,7 @@
-class UserModelDB{
+class Person{
   String name;
 
-  UserModelDB({required this.name});
+  Person({
+    required this.name,
+  });
 }

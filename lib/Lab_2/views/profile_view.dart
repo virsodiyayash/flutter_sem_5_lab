@@ -38,30 +38,43 @@ class _ProfileViewState extends State<ProfileView> {
         key: _formKey,
         child: Column(
           children: [
+
+            SizedBox(height: 5,),
+
             TextFormField(
               controller: nameController,
               validator: _profileController.validateName,
               decoration: InputDecoration(
+                  hintText: "Enter Name",
+                label: Text("Enter Name"),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12)
                 )
               ),
             ),
 
+            SizedBox(height: 5,),
+
             TextFormField(
               controller: emailController,
               validator: _profileController.validateEmail,
               decoration: InputDecoration(
+                  hintText: "Enter Email",
+                  label: Text("Enter Email"),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)
                   )
               ),
             ),
 
+            SizedBox(height: 5,),
+
             TextFormField(
               controller: numberController,
               validator: _profileController.validateNumber,
               decoration: InputDecoration(
+                hintText: "Enter Phone Number",
+                  label: Text("Enter Phone Number"),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)
                   )
