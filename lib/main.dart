@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advance_lab/Lab_4/view/bottom_sheet_view.dart';
+import 'package:flutter_advance_lab/Lab_4/view/custom_bottom_sheet.dart';
+import 'package:flutter_advance_lab/Lab_4/view/custom_snackbar.dart';
+import 'package:flutter_advance_lab/Lab_4/view/dialogue_view.dart';
+import 'package:flutter_advance_lab/Lab_4/view/snackbar_practice.dart';
+import 'package:flutter_advance_lab/Lab_5/data_passed_screen.dart';
+import 'package:flutter_advance_lab/Lab_5/first_screen.dart';
+import 'package:flutter_advance_lab/Lab_5/login_middleware.dart';
+import 'package:flutter_advance_lab/Lab_5/login_screen.dart';
+import 'package:flutter_advance_lab/Lab_5/second_screen.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +21,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -31,7 +42,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FirstScreen(),
+      getPages: [
+        GetPage(name: "/", page: () => FirstScreen() , curve: Curves.bounceIn),
+        GetPage(name: "/loginScreen", page: () => LoginScreen()),
+        GetPage(name: "/second", page: () => SecondScreen() , curve: Curves.bounceIn , middlewares: [LoginMiddleware()]),
+        GetPage(name: "/dataScreen", page: () => DataPassedScreen() , curve: Curves.bounceIn)
+      ],
     );
   }
 }
