@@ -9,6 +9,11 @@ import 'package:flutter_advance_lab/Lab_5/first_screen.dart';
 import 'package:flutter_advance_lab/Lab_5/login_middleware.dart';
 import 'package:flutter_advance_lab/Lab_5/login_screen.dart';
 import 'package:flutter_advance_lab/Lab_5/second_screen.dart';
+import 'package:flutter_advance_lab/Lab_6/non_reactive.dart';
+import 'package:flutter_advance_lab/Lab_6/reactive_text_field.dart';
+import 'package:flutter_advance_lab/Lab_6/reactive_variable.dart';
+import 'package:flutter_advance_lab/Lab_6/show_hide_view.dart';
+import 'package:flutter_advance_lab/Lab_6/timer_view.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: FirstScreen(),
+      home: ShowHideView(),
       getPages: [
         GetPage(name: "/", page: () => FirstScreen() , curve: Curves.bounceIn),
         GetPage(name: "/loginScreen", page: () => LoginScreen()),
