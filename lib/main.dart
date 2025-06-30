@@ -14,6 +14,8 @@ import 'package:flutter_advance_lab/Lab_6/reactive_text_field.dart';
 import 'package:flutter_advance_lab/Lab_6/reactive_variable.dart';
 import 'package:flutter_advance_lab/Lab_6/show_hide_view.dart';
 import 'package:flutter_advance_lab/Lab_6/timer_view.dart';
+import 'package:flutter_advance_lab/Lab_7/list_view.dart';
+import 'package:flutter_advance_lab/Lab_7/map_view.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ShowHideView(),
+      home: MapView(),
       getPages: [
         GetPage(name: "/", page: () => FirstScreen() , curve: Curves.bounceIn),
         GetPage(name: "/loginScreen", page: () => LoginScreen()),
