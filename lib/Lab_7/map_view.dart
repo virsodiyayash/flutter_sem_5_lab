@@ -56,6 +56,7 @@ class _MapViewState extends State<MapView> {
                             IconButton(onPressed: () {
                               widget.controller.isEdit.value = true;
                               widget.controller.index.value = index;
+                              nameController.text = widget.controller.usersList[index]["name"];
                             }, icon: Icon(Icons.edit_outlined)),
 
                             IconButton(
