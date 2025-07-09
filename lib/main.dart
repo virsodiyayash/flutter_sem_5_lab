@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advance_lab/Lab_10/view/add_edit_view.dart';
+import 'package:flutter_advance_lab/Lab_11/user_view.dart';
 import 'package:flutter_advance_lab/Lab_4/view/bottom_sheet_view.dart';
 import 'package:flutter_advance_lab/Lab_4/view/custom_bottom_sheet.dart';
 import 'package:flutter_advance_lab/Lab_4/view/custom_snackbar.dart';
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MapView(),
+      home: UserView(),
       getPages: [
         GetPage(name: "/", page: () => FirstScreen() , curve: Curves.bounceIn),
         GetPage(name: "/loginScreen", page: () => LoginScreen()),
