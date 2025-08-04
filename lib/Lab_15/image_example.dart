@@ -1,56 +1,69 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 void main(){
-  runApp(MaterialApp(home: ProfilePhotoUploader(),));
+  runApp(MaterialApp(home: UploadProfilePhoto(),));
 }
 
-class ProfilePhotoUploader extends StatefulWidget {
-  const ProfilePhotoUploader({Key? key}) : super(key: key);
+class UploadProfilePhoto extends StatefulWidget {
+  const UploadProfilePhoto({super.key});
 
   @override
-  State<ProfilePhotoUploader> createState() => _ProfilePhotoUploaderState();
+  State<UploadProfilePhoto> createState() => _UploadProfilePhotoState();
 }
 
-class _ProfilePhotoUploaderState extends State<ProfilePhotoUploader> {
-  File? _imageFile;
-  String? uploadedImageUrl;
+class _UploadProfilePhotoState extends State<UploadProfilePhoto> {
+  File? _image;
+  final picker = ImagePicker();
+  final String userId = '6890b56b11d9031429f169e1'; // 🔁 Replace with your actual user ID
+  late String serverUrl = 'http://10.120.15.203:5398/user/profile/$userId/photo'; // ✅ Update with your IP if needed
+  var image_url = "";
 
-  final String userId = '688b62ce5c89d345fbd345c5';
-  final String serverUrl = 'http://10.26.60.41:5398';
+  Future<void> pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-  Future<void> _pickImage() async {
-    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (picked != null) {
-      setState(() => _imageFile = File(picked.path));
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
     }
   }
 
-  Future<void> _uploadImage() async {
-    if (_imageFile == null) return;
+  Future<void> uploadImage() async {
+    if (_image == null) {
+      print('No image selected');
+      return;
+    }
 
-    final uri = Uri.parse('$serverUrl/profile/$userId');
-    final request = http.MultipartRequest('PUT', uri);
+    try {
+      var request = http.MultipartRequest('PUT', Uri.parse(serverUrl));
 
-    request.files.add(await http.MultipartFile.fromPath('profile_photo', _imageFile!.path));
+      // 🟢 This is the key expected by Multer: profile_photo
+      request.files.add(await http.MultipartFile.fromPath(
+        'profile_photo',
+        _image!.path,
+      ));
 
-    // You can send other fields along with the image
-    // request.fields['name'] = 'Yash Updated';
-    // request.fields['location'] = 'Gujarat';
+      var response = await request.send();
 
-    final response = await request.send();
-
-    if (response.statusCode == 200) {
-      final responseBody = await response.stream.bytesToString();
-      final json = jsonDecode(responseBody);
-      setState(() {
-        uploadedImageUrl = json['profile_photo'];
-      });
-    } else {
-      print('Upload failed with status: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseBody);
+        print("Json Response : $jsonResponse :::::::::::::");
+        setState(() {
+          image_url = jsonResponse["user"]["profile_photo"];
+        });
+        print('✅ Success: ${jsonResponse["message"]}');
+      } else {
+        print('❌ Failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('⚠️ Error uploading image: $e');
     }
   }
 
@@ -59,34 +72,28 @@ class _ProfilePhotoUploaderState extends State<ProfilePhotoUploader> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Upload Profile Photo"),
-        backgroundColor: Colors.teal,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text("Pick Image"),
-            ),
+            _image != null
+                ? Image.file(_image!, width: 150, height: 150, fit: BoxFit.cover)
+                : const Text("No image selected"),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _uploadImage,
-              child: const Text("Upload to Server"),
+              onPressed: pickImage,
+              child: const Text("Pick Image"),
             ),
-            const SizedBox(height: 30),
-            if (uploadedImageUrl != null)
-              Column(
-                children: [
-                  const Text("Uploaded Profile Photo:"),
-                  const SizedBox(height: 10),
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(uploadedImageUrl!),
-                  ),
-                ],
-              )
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: uploadImage,
+              child: const Text("Upload Image"),
+            ),
+
+            image_url.isNotEmpty
+                ? Image.network(image_url, width: 150, height: 150)
+                : Container(),
           ],
         ),
       ),
