@@ -5,6 +5,10 @@ import 'package:flutter_advance_lab/Lab_15/permission_handler_camera.dart';
 import 'package:flutter_advance_lab/Lab_15/permission_location.dart';
 import 'package:flutter_advance_lab/Lab_15/permission_multiple_permission.dart';
 import 'package:flutter_advance_lab/Lab_15/permission_storage.dart';
+import 'package:flutter_advance_lab/Lab_17/pro_1.dart';
+import 'package:flutter_advance_lab/Lab_17/pro_2.dart';
+import 'package:flutter_advance_lab/Lab_17/pro_3.dart';
+import 'package:flutter_advance_lab/Lab_18/que_1.dart';
 import 'package:flutter_advance_lab/Lab_4/view/bottom_sheet_view.dart';
 import 'package:flutter_advance_lab/Lab_4/view/custom_bottom_sheet.dart';
 import 'package:flutter_advance_lab/Lab_4/view/custom_snackbar.dart';
@@ -55,7 +59,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: PermissionMultiplePermission(),
+      home: Que1(),
       getPages: [
         GetPage(name: "/", page: () => FirstScreen() , curve: Curves.bounceIn),
         GetPage(name: "/loginScreen", page: () => LoginScreen()),
