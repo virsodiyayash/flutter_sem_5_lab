@@ -4,13 +4,17 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'  // ✅ Update AGP version
+        classpath 'com.android.tools.build:gradle:8.3.0'  // ✅ Update AGP version
     }
 }
 
 allprojects {
     repositories {
         google()
+        maven {
+            url "http://dl.google.com/dl/android/maven2/"
+            allowInsecureProtocol = true
+        }
         mavenCentral()
     }
 }

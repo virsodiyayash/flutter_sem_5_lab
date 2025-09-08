@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advance_lab/Lab_10/view/add_edit_view.dart';
 import 'package:flutter_advance_lab/Lab_11/user_view.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_advance_lab/Lab_17/pro_1.dart';
 import 'package:flutter_advance_lab/Lab_17/pro_2.dart';
 import 'package:flutter_advance_lab/Lab_17/pro_3.dart';
 import 'package:flutter_advance_lab/Lab_18/que_1.dart';
+import 'package:flutter_advance_lab/Lab_19/google_sign_in.dart';
 import 'package:flutter_advance_lab/Lab_4/view/bottom_sheet_view.dart';
 import 'package:flutter_advance_lab/Lab_4/view/custom_bottom_sheet.dart';
 import 'package:flutter_advance_lab/Lab_4/view/custom_snackbar.dart';
@@ -28,7 +30,11 @@ import 'package:flutter_advance_lab/Lab_7/list_view.dart';
 import 'package:flutter_advance_lab/Lab_7/map_view.dart';
 import 'package:get/get.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -59,7 +65,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Que1(),
+      home: GoogleSignInExample(),
       getPages: [
         GetPage(name: "/", page: () => FirstScreen() , curve: Curves.bounceIn),
         GetPage(name: "/loginScreen", page: () => LoginScreen()),
